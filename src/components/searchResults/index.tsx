@@ -1,3 +1,4 @@
+import { useDispatch, useSelector } from "react-redux";
 import Song from "../songs";
 import { FlexSongs } from "./styles";
 
@@ -11,20 +12,31 @@ type SearchResultsProps = {
   songList: SongData[];
   isLoading: boolean;
   error: string | null;
-  onAddSong: (song: SongData) => void;
-  library: SongData[];
 };
 
-const SearchResults = ({songList, isLoading, error, onAddSong, library} : SearchResultsProps) => {
+type RootState = {
+  songs: {
+    songs: SongData[];
+  };
+};
+
+const SearchResults = ({songList, isLoading, error} : SearchResultsProps) => {
     if (isLoading) return <p style={{color: 'white'}}>Cargando canciones...</p>;
     if (error) return <p style={{color: 'red'}}>{error}</p>;
     if (!songList.length) return <p style={{color: 'yellow'}}>No se encontraron canciones.</p>;
 
-    // const [busqueda, setBusqueda] = useState("");
+    const dispatch = useDispatch();
 
-    // const handleInputChange = (e) => {
-    //     setBusqueda(e.target.value);
-    // };
+    const handleAddSong = (song : SongData) =>{
+        dispatch({
+            type: "ADD_SONG",
+            payload: song
+        })
+    }
+
+    const library = useSelector(
+        (state: RootState) => state.songs.songs
+    );
 
     return(
         <section>
@@ -43,7 +55,7 @@ const SearchResults = ({songList, isLoading, error, onAddSong, library} : Search
                             id={idTrack}
                             songName={title}
                             artist={artist}
-                            onAdd={() => onAddSong(song)}
+                            onAdd={() => handleAddSong(song)}
                             isInLibrary={isInLibrary}
                         />
                     );

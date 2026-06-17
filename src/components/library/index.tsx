@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Song from "../songs";
 import { FlexSongs } from "./styles";
+import { useDispatch, useSelector } from "react-redux";
 
 type SongData = {
   idTrack: string;
@@ -13,25 +14,41 @@ type LibraryProps = {
   onRemoveSong: (idTrack: string) => void;
 };
 
-const Library = ({songList, onRemoveSong} : LibraryProps) => {
-    const [lista, setLista] = useState<SongData[]>([]);
+type RootState = {
+  songs: {
+    songs: SongData[];
+  };
+};
 
-    useEffect(() => {
-        const fetchSongs = async () => {
-            const response = songList;
-            setLista(response);
-        };
+const Library = () => {
+    const dispatch = useDispatch();
 
-        fetchSongs();
+    const songList = useSelector((state: RootState) => state.songs.songs)
+    // const [lista, setLista] = useState<SongData[]>([]);
 
-    }, [songList]);
+    // useEffect(() => {
+    //     const fetchSongs = async () => {
+    //         const response = songList;
+    //         setLista(response);
+    //     };
+
+    //     fetchSongs();
+
+    // }, [songList]);
+
+    const handleRemoveSong = (idTrack : string) => {
+        dispatch({
+            type: "REMOVE_SONG",
+            payload: idTrack,
+        });
+    }
 
     return(
         <section>
             <h2>Mis Canciones</h2>
             <FlexSongs>
                 {
-                    lista.map(song => {
+                    songList.map(song => {
                         const {idTrack, title, artist} = song;
 
                         return(
@@ -40,7 +57,7 @@ const Library = ({songList, onRemoveSong} : LibraryProps) => {
                                 id={idTrack}
                                 songName={title} 
                                 artist={artist} 
-                                onRemove={() => onRemoveSong(idTrack)}
+                                onRemove={() => handleRemoveSong(idTrack)}
                             />
                         );
                     })

@@ -19,22 +19,22 @@ export interface SongData {
 }
 
 const AppComp = () => {
-    const [library, setLibrary] = useState<SongData[]>([]);
+    // const [library, setLibrary] = useState<SongData[]>([]);
     const [inputValue, setInputValue] = useState<string>("");
     const [searchTerm, setSearchTerm] = useState<string>("");
 
     const {songs, isLoading, error} = useFetchAlbums(searchTerm)
 
-    const addSong = (song : SongData) => {
-        const exists = library.some((s) => s.idTrack === song.idTrack);
-        if (exists) return;
+    // const addSong = (song : SongData) => {
+    //     const exists = library.some((s) => s.idTrack === song.idTrack);
+    //     if (exists) return;
 
-        setLibrary(prev => [...prev, song]);
-    };
+    //     setLibrary(prev => [...prev, song]);
+    // };
 
-    const removeSong = (songId : string) => {
-        setLibrary(prev => prev.filter(song => song.idTrack !== songId));
-    };
+    // const removeSong = (songId : string) => {
+    //     setLibrary(prev => prev.filter(song => song.idTrack !== songId));
+    // };
 
     return (
         <ThemeProvider theme={Theme}>
@@ -48,10 +48,10 @@ const AppComp = () => {
             />
             <Routes>
                 <Route path='/song/:id' element={<SongDetail songs={songs}/>} />
-                <Route path='/' element={<SearchResults songList={songs} isLoading={isLoading} error={error} onAddSong={addSong} library={library}/>}/>
+                <Route path='/' element={<SearchResults songList={songs} isLoading={isLoading} error={error}/>}/>
             </Routes>
             
-            <Library songList={library} onRemoveSong={removeSong}/>
+            <Library/>
         </div>
         </ThemeProvider>
     );
