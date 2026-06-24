@@ -11,19 +11,18 @@ import SongDetail from '../songDetail';
 import { ThemeProvider } from 'styled-components';
 import Theme from '../../theme';
 import GlobalStyles from '../../theme/GlobalStyles';
+import { FlexContainer } from './styles';
 
-export interface SongData {
-  idTrack: string;
-  title: string;
-  artist: string;
-}
+// export interface SongData {
+//   idTrack: string;
+//   title: string;
+//   artist: string;
+// }
 
 const AppComp = () => {
     // const [library, setLibrary] = useState<SongData[]>([]);
     const [inputValue, setInputValue] = useState<string>("");
     const [searchTerm, setSearchTerm] = useState<string>("");
-
-    const {songs, isLoading, error} = useFetchAlbums(searchTerm)
 
     // const addSong = (song : SongData) => {
     //     const exists = library.some((s) => s.idTrack === song.idTrack);
@@ -46,12 +45,14 @@ const AppComp = () => {
                 setSearchTerm={setInputValue}
                 onSearch={() => setSearchTerm(inputValue)}
             />
-            <Routes>
-                <Route path='/song/:id' element={<SongDetail songs={songs}/>} />
-                <Route path='/' element={<SearchResults songList={songs} isLoading={isLoading} error={error}/>}/>
-            </Routes>
-            
-            <Library/>
+
+            <FlexContainer>
+                <Library/>
+                <Routes>
+                    <Route path='/song/:id' element={<SongDetail/>} />
+                    <Route path='/' element={<SearchResults searchInput={searchTerm}/>}/>
+                </Routes>
+            </FlexContainer>
         </div>
         </ThemeProvider>
     );

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Song from "../songs";
 import { FlexSongs } from "./styles";
 import { useDispatch, useSelector } from "react-redux";
+import { removeSong } from "../../redux/slices/librarySlice";
 
 type SongData = {
   idTrack: string;
@@ -15,7 +16,7 @@ type LibraryProps = {
 };
 
 type RootState = {
-  songs: {
+  librarySongs: {
     songs: SongData[];
   };
 };
@@ -23,7 +24,7 @@ type RootState = {
 const Library = () => {
     const dispatch = useDispatch();
 
-    const songList = useSelector((state: RootState) => state.songs.songs)
+    const songList = useSelector((state: RootState) => state.librarySongs.songs)
     // const [lista, setLista] = useState<SongData[]>([]);
 
     // useEffect(() => {
@@ -37,14 +38,11 @@ const Library = () => {
     // }, [songList]);
 
     const handleRemoveSong = (idTrack : string) => {
-        dispatch({
-            type: "REMOVE_SONG",
-            payload: idTrack,
-        });
+        dispatch(removeSong(idTrack));
     }
 
     return(
-        <section>
+        <section style={{width: '50%'}}>
             <h2>Mis Canciones</h2>
             <FlexSongs>
                 {

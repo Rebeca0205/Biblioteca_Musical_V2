@@ -1,5 +1,9 @@
 import React from "react"
-import { FormSearchBar, SearchButton, SearchInput } from "./styles";
+import refresh from "./refresh-ccw.svg"
+import { FormSearchBar, ImgIcon, RefreshIcon, SearchButton, SearchInput } from "./styles";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "../../redux/store";
+import { resetResults } from "../../redux/slices/searchSlice";
 
 interface SearchBarProps {
     searchTerm: string;
@@ -8,9 +12,17 @@ interface SearchBarProps {
 }
 
 const SearchBar = ({searchTerm, setSearchTerm, onSearch}: SearchBarProps) => {
+    const dispatch = useDispatch<AppDispatch>();
+
     const handleSubmit = (e:React.ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
         onSearch();
+    };
+
+    const handleRefresh = () => {
+        setSearchTerm('');
+        dispatch(resetResults());
+        
     };
 
     return(
@@ -22,6 +34,10 @@ const SearchBar = ({searchTerm, setSearchTerm, onSearch}: SearchBarProps) => {
                 onChange={(e) => setSearchTerm(e.target.value)}
             />
             <SearchButton type="submit">Buscar</SearchButton>
+
+            <RefreshIcon onClick={handleRefresh}>
+                <ImgIcon src={refresh} alt='Remover'/>
+            </RefreshIcon>
         </FormSearchBar>
     );
 }

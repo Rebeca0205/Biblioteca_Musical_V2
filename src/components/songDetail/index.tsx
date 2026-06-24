@@ -1,5 +1,6 @@
 import { useParams, useNavigate} from "react-router-dom";
 import { BackButton, SongDetails } from "./styles";
+import { useSelector } from "react-redux";
 
 type Song = {
     idTrack: string;
@@ -8,16 +9,20 @@ type Song = {
     artist: string;
 };
 
-interface SongDetailProps {
-    songs: Song[];
-}
+type RootState = {
+  resultSongs: {
+    results: Song[];
+  },
+};
 
-const SongDetail = ({ songs }: SongDetailProps) => {
+const SongDetail = () => {
     const { id } = useParams<{ id: string }>();
 
     const navigate = useNavigate();
 
-    const song = songs.find((song) => song.idTrack === id);
+    const songList = useSelector((state: RootState) => state.resultSongs.results);
+
+    const song = songList.find((song) => song.idTrack === id);
 
     if (!song) {
         return <p>No se encontró la canción.</p>;

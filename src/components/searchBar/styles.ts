@@ -2,6 +2,8 @@ import styled from "styled-components";
 
 const FormSearchBar = styled.form`
     margin-top: 20px;
+    display: flex;
+    justify-content: center
 `
 
 const SearchInput = styled.input`
@@ -18,8 +20,20 @@ const SearchButton = styled.button`
     cursor: pointer;
 `
 
+const RefreshIcon = styled.i`
+    width: 3%;
+    cursor: pointer;
+`
+
+const ImgIcon = styled.img`
+    width: 50%;
+    height: 100%;
+`
+
 export{
     FormSearchBar,
     SearchInput, 
-    SearchButton
+    SearchButton,
+    RefreshIcon,
+    ImgIcon
 }

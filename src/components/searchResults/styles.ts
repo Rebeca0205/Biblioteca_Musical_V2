@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const FlexSongs = styled.article`
-    width: 70%;
+    width: 90%;
     display: flex;
     flex-direction: column;
     align-self: center;
