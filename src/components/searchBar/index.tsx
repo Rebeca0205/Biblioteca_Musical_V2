@@ -36,7 +36,7 @@ const SearchBar = ({searchTerm, setSearchTerm, onSearch}: SearchBarProps) => {
             <SearchButton type="submit">Buscar</SearchButton>
 
             <RefreshIcon onClick={handleRefresh}>
-                <ImgIcon src={refresh} alt='Remover'/>
+                <ImgIcon src={refresh} alt='Refresh'/>
             </RefreshIcon>
         </FormSearchBar>
     );
